@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BackToLife – Einladung</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f0;
+            color: #1a1a1a;
+            text-align: center;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        h1 { font-size: 1.4rem; margin-bottom: 8px; }
+        p { color: #666; font-size: 0.95rem; }
+    </style>
+    <script>
+        const from = new URLSearchParams(window.location.search).get('from');
+        if (from) {
+            window.location = 'backtolife://invite?from=' + encodeURIComponent(from);
+        }
+    </script>
+</head>
+<body>
+    <h1>BackToLife</h1>
+    <p>Öffne die BackToLife-App,<br>um die Einladung anzunehmen.</p>
+</body>
+</html>
