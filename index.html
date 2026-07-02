@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BackToLife – Einladung</title>
+    <title>BackToLife - Einladung</title>
     <style>
         body {
             font-family: -apple-system, sans-serif;
@@ -19,18 +19,46 @@
             padding: 24px;
             box-sizing: border-box;
         }
-        h1 { font-size: 1.4rem; margin-bottom: 8px; }
-        p { color: #666; font-size: 0.95rem; }
-    </style>
-    <script>
-        const from = new URLSearchParams(window.location.search).get('from');
-        if (from) {
-            window.location = 'backtolife://invite?from=' + encodeURIComponent(from);
+        h1 { font-size: 1.5rem; margin-bottom: 6px; }
+        p { color: #666; font-size: 0.95rem; line-height: 1.4; max-width: 320px; }
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            box-sizing: border-box;
+            margin: 8px 0;
+            padding: 15px 20px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
         }
-    </script>
+        .primary { background: #3d7a28; color: #fff; }
+        .secondary { background: #fff; color: #1a1a1a; border: 1px solid #ddd; }
+        .hint { font-size: 0.8rem; color: #999; margin-top: 18px; max-width: 320px; }
+    </style>
 </head>
 <body>
     <h1>BackToLife</h1>
-    <p>Öffne die BackToLife-App,<br>um die Einladung anzunehmen.</p>
+    <p>Du wurdest zu BackToLife eingeladen.</p>
+
+    <a id="openApp" class="btn primary" href="#">Einladung in der App öffnen</a>
+    <a class="btn secondary" href="https://testflight.apple.com/join/fugNvQWH">App über TestFlight installieren</a>
+
+    <p class="hint">Noch keine App? Installiere sie zuerst über TestFlight. Falls die Freundschaft danach nicht automatisch verbunden ist, lass dich einfach nochmal einladen, sobald du eingerichtet bist.</p>
+
+    <script>
+        const from = new URLSearchParams(window.location.search).get('from');
+        const openApp = document.getElementById('openApp');
+        if (from) {
+            const deep = 'backtolife://invite?from=' + encodeURIComponent(from);
+            openApp.href = deep;
+            // Automatischer Versuch: öffnet die App direkt, falls sie installiert ist.
+            setTimeout(function () { window.location = deep; }, 300);
+        } else {
+            // Ohne from-Parameter gibt es keine Einladung zum Annehmen.
+            openApp.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
