@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BackToLife - Einladung</title>
+    <title>BackToLife</title>
     <style>
         body {
             font-family: -apple-system, sans-serif;
@@ -19,12 +19,14 @@
             padding: 24px;
             box-sizing: border-box;
         }
-        h1 { font-size: 1.5rem; margin-bottom: 6px; }
-        p { color: #666; font-size: 0.95rem; line-height: 1.4; max-width: 320px; }
+        .logo { width: 84px; height: 84px; margin-bottom: 14px; }
+        h1 { font-size: 1.6rem; margin: 0 0 8px; }
+        .intro { color: #666; font-size: 0.98rem; line-height: 1.45; max-width: 330px; margin: 0; }
+        .invited { color: #3d7a28; font-weight: 600; font-size: 0.95rem; margin: 20px 0 0; }
         .btn {
             display: block;
             width: 100%;
-            max-width: 320px;
+            max-width: 330px;
             box-sizing: border-box;
             margin: 8px 0;
             padding: 15px 20px;
@@ -33,31 +35,35 @@
             font-weight: 600;
             text-decoration: none;
         }
+        .btn:first-of-type { margin-top: 22px; }
         .primary { background: #3d7a28; color: #fff; }
         .secondary { background: #fff; color: #1a1a1a; border: 1px solid #ddd; }
-        .hint { font-size: 0.8rem; color: #999; margin-top: 18px; max-width: 320px; }
+        .hint { font-size: 0.8rem; color: #999; margin-top: 18px; max-width: 330px; }
     </style>
 </head>
 <body>
+    <img class="logo" src="logo.png" alt="BackToLife">
     <h1>BackToLife</h1>
-    <p>Du wurdest zu BackToLife eingeladen.</p>
+    <p class="intro">Weniger Zeit in ablenkenden Apps verlieren, ohne Blockieren, mit Fortschritt statt Verboten.</p>
 
-    <a id="openApp" class="btn primary" href="#">Einladung in der App öffnen</a>
-    <a class="btn secondary" href="https://testflight.apple.com/join/fugNvQWH">App über TestFlight installieren</a>
+    <p id="invited" class="invited" style="display:none">Ein Freund hat dich eingeladen.</p>
+    <a id="openApp" class="btn primary" href="#" style="display:none">Einladung in der App öffnen</a>
+    <a id="testflight" class="btn primary" href="https://testflight.apple.com/join/fugNvQWH">App über TestFlight installieren</a>
 
     <p class="hint">Noch keine App? Installiere sie zuerst über TestFlight. Falls die Freundschaft danach nicht automatisch verbunden ist, lass dich einfach nochmal einladen, sobald du eingerichtet bist.</p>
 
     <script>
         const from = new URLSearchParams(window.location.search).get('from');
-        const openApp = document.getElementById('openApp');
         if (from) {
             const deep = 'backtolife://invite?from=' + encodeURIComponent(from);
+            const openApp = document.getElementById('openApp');
             openApp.href = deep;
-            // Automatischer Versuch: öffnet die App direkt, falls sie installiert ist.
+            openApp.style.display = 'block';
+            document.getElementById('invited').style.display = 'block';
+            // Bei Einladung ist "In der App öffnen" die Hauptaktion, TestFlight nachrangig.
+            document.getElementById('testflight').className = 'btn secondary';
+            // Automatischer Versuch: öffnet die App direkt, falls installiert.
             setTimeout(function () { window.location = deep; }, 300);
-        } else {
-            // Ohne from-Parameter gibt es keine Einladung zum Annehmen.
-            openApp.style.display = 'none';
         }
     </script>
 </body>
